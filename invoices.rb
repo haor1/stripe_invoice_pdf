@@ -24,6 +24,8 @@ invoices.auto_paging_each do |invoice|
   end
 end
 
+#TODO: Add starting_after and ending_before to give the User the option to only pull invoices after or before a given index
+
 #prints the total number of a User's invoices which have an invoice PDF
 puts "# of invoices: " + String(invoice_ids.length)
 
