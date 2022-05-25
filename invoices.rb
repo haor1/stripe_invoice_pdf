@@ -8,6 +8,10 @@ api_key = gets.chomp
 
 Stripe.api_key = api_key
 
+#creates the invoices directory if it does not exist. This is where the invoice PDFs will be downloaded
+directory_name = "invoices"
+Dir.mkdir(directory_name) unless File.exists?(directory_name)
+
 #Stripe pagination to retrieve the full list of a User's invoices
 invoice_ids = Hash.new
 invoices = Stripe::Invoice.list({limit: 100})
