@@ -3,6 +3,8 @@
 require 'stripe'
 require 'open-uri'
 
+puts 'Please note the process to download all of your invoice PDFs may take several minutes depending on the number of invoices in your account'
+puts ""
 puts 'Please enter your Stripe API key to retrieve your invoice PDFs in bulk: '
 api_key = gets.chomp
 
