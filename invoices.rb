@@ -25,7 +25,7 @@ end
 #prints the total number of a User's invoices which have an invoice PDF
 puts "# of invoices: " + String(invoice_ids.length)
 
-#This block copies the invoice PDF to the /invoices directory
+#This block copies each of the invoice PDFs to the /invoices directory
 invoice_ids.each do |k, v|
   open(v) do |image|
     File.open("./invoices/"+k+".pdf", "wb") do |file|
