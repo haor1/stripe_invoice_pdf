@@ -10,13 +10,45 @@ api_key = gets.chomp
 
 Stripe.api_key = api_key
 
+#Ask for user input to determine whether to download all invoices or only invoices before or after a certain invoice
+puts ""
+puts 'Please enter 1 if you would like to download all of your invoices. Please enter 2 if you would like to download invoices created after a given invoice.
+Please enter 3 if you would like to download invoices created before a given invoice.'
+option = nil
+until option == 3 || option == 2 || option == 1
+  option = gets.chomp.to_i
+end
+
+if option == 2
+  puts ""
+  puts 'Please enter an invoice ID (in_xxx). Only invoices created after this invoice will be downloaded.'
+  starting_after = gets.chomp
+elsif option == 3
+  puts ""
+  puts 'Please enter an invoice ID (in_xxx). Only invoices created before this invoice will be downloaded.'
+  ending_before = gets.chomp
+end
+
 #creates the invoices directory if it does not exist. This is where the invoice PDFs will be downloaded
 directory_name = "invoices"
 Dir.mkdir(directory_name) unless File.exists?(directory_name)
 
+puts "Please wait..."
+
+case option
+#option to dowload all invoices
+when 1
+  invoices = Stripe::Invoice.list({limit: 100})
+#option to download all invoices after a given invoice
+when 2
+  invoices = Stripe::Invoice.list({limit: 100, starting_after: starting_after})
+#option to download all invoices before a given invoice
+when 3
+  invoices = Stripe::Invoice.list({limit: 100, ending_before: ending_before})
+end
+
 #Stripe pagination to retrieve the full list of a User's invoices
 invoice_ids = Hash.new
-invoices = Stripe::Invoice.list({limit: 100})
 invoices.auto_paging_each do |invoice|
   #This conditional statement ensures only invoices with a PDF are stored in our list
   if !invoice.invoice_pdf.nil?
@@ -24,10 +56,8 @@ invoices.auto_paging_each do |invoice|
   end
 end
 
-#TODO: Add starting_after and ending_before to give the User the option to only pull invoices after or before a given index
-
 #prints the total number of a User's invoices which have an invoice PDF
-puts "# of invoices: " + String(invoice_ids.length)
+puts "Now downloading the following number of invoices:  " + String(invoice_ids.length)
 
 #This block copies each of the invoice PDFs to the /invoices directory
 invoice_ids.each do |k, v|
