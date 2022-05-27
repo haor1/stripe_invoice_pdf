@@ -14,17 +14,16 @@ Stripe.api_key = api_key
 puts ""
 puts 'Please enter 1 if you would like to download all of your invoices. Please enter 2 if you would like to download invoices created after a given invoice.
 Please enter 3 if you would like to download invoices created before a given invoice.'
+puts ""
 option = nil
 until option == 3 || option == 2 || option == 1
   option = gets.chomp.to_i
 end
 
 if option == 2
-  puts ""
   puts 'Please enter an invoice ID (in_xxx). Only invoices created after this invoice will be downloaded.'
   starting_after = gets.chomp
 elsif option == 3
-  puts ""
   puts 'Please enter an invoice ID (in_xxx). Only invoices created before this invoice will be downloaded.'
   ending_before = gets.chomp
 end
