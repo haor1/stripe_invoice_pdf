@@ -11,4 +11,5 @@ This can also be found as a Ruby Gem here: https://rubygems.org/gems/Stripe_Invo
 To install as a Ruby gem, simply run the following command in the Terminal:
 
 #
-gem install Stripe_Invoice_Gem
+
+`gem install Stripe_Invoice_Gem`
