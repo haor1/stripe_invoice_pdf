@@ -6,9 +6,7 @@ require 'open-uri'
 puts 'Please note the process to download all of your invoice PDFs may take several minutes depending on the number of invoices in your account'
 puts ""
 puts 'Please enter your Stripe API key to retrieve your invoice PDFs in bulk: '
-api_key = gets.chomp
-
-Stripe.api_key = api_key
+Stripe.api_key = gets.chomp
 
 #Ask for user input to determine whether to download all invoices or only invoices before or after a certain invoice
 puts ""
